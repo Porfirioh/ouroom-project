@@ -16,53 +16,34 @@ use Carbon\Carbon;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = '/';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('guest')->except('logout');
     }
 
-
-    public function showLoginForm(){
+    public function showLoginForm()
+    {
         return view('auth.login');
     }
 
-    public function showRegisterForm(){
+    public function showRegisterForm()
+    {
         $years = array_combine(range(date("Y"), 2015), range(date("Y"), 2015));
-        return view('auth.register', ['years'=>$years]);
+        return view('auth.register', ['years' => $years]);
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $this->validate($request, [
             'username' => 'required|max:255',
             'password' => 'required',
         ]);
         $crendentials = ['username' => $request->username, 'password' => $request->password];
         if (Auth::attempt($crendentials, $request->remember)) {
-            // Log UserLoginHistory
             $user_login_history = new UserLoginHistory();
             $user_login_history->user_id = Auth::user()->id;
             $user_login_history->last_login_ip =  $request->ip();
@@ -78,7 +59,8 @@ class LoginController extends Controller
         }
     }
 
-    public function register(StoreUserRequest $request){
+    public function register(StoreUserRequest $request)
+    {
         $this->validate($request, [
             'full_name' => 'required|max:255',
             'email' => 'required|max:255|unique:tbl_user',
@@ -98,19 +80,21 @@ class LoginController extends Controller
         $user->account_type = 'Siswa';
         $user->assignRole('Siswa');
         $user->save();
-        if(!$user->save()) {
+        if (!$user->save()) {
             return redirect()->back()->with('alert_error', 'Gagal Disimpan');
         } else {
             return redirect('/auth/login')->withSuccess('Registrasi berhasil, silahkan Login.');
         }
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect('/auth/login');
     }
 
-    function authenticated(Request $request, $user){
+    function authenticated(Request $request, $user)
+    {
         $user->last_login = Carbon::now()->toDateTimeString();
         $user->last_login_ip = $request->getClientIp();
         $user->save();

@@ -17,7 +17,6 @@
 			</div>
 			@endif
 		</div>
-
 		<div class="form-group">
 			<label>Email</label>
 			<input type="text" class="form-control" value="" name="email">
@@ -53,7 +52,6 @@
                 @endforeach
             </select>
 		</div>
-
 		<div class="form-group">
 			<label>Username</label>
 			<input type="text" class="form-control" value="" name="username">
@@ -63,7 +61,6 @@
 			</div>
 			@endif
 		</div>
-
 		<div class="form-group col-md-6" style="padding-left: 0px">
 			<label>Password</label>
 			<input type="password" class="form-control" value="" name="password">
@@ -73,7 +70,6 @@
 			</div>
 			@endif
 		</div>
-
 		<div class="form-group col-md-6" style="padding-left: 0px">
 			<label>Retype Password</label>
 			<input type="password" class="form-control" value="" name="password_confirmation">
@@ -83,11 +79,9 @@
 			</div>
 			@endif
 		</div>
-
 		<div class="form-group">
 			<button type="submit" class="ui huge inverted primary button"> TAMBAH </button>
 		</div>
-
 	</form>
 
 @endsection

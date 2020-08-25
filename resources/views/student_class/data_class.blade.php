@@ -40,7 +40,6 @@
 		$user = Auth::user();
 	?>
 
-
     <div style="padding-bottom: 20px">
         <a  href="{{ route('create-student-class') }}" type="button" class="btn btn-info custombtn"> TAMBAH </a>
     </div>

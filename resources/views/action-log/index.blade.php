@@ -49,8 +49,6 @@
 </table>
 </div>
 
-
-
 @endsection
 
 @push('scripts')
@@ -63,7 +61,6 @@ var table;
 
 $( document ).ready(function() {
   $( "#reset" ).click(function() {
-      
     $.ajax({
       type:'POST',
       url: base_url + '/action-log/remove',
@@ -87,7 +84,6 @@ $( document ).ready(function() {
         swal('Terjadi kegagalan sistem', { button:false, icon: "error", timer: 1000});
       }
     });
-
   });
 });
 

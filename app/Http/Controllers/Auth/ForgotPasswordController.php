@@ -23,7 +23,6 @@ class ForgotPasswordController extends Controller
         $response = Password::sendResetLink($credentials, function (Message $message) {
             $message->subject($this->getEmailSubject());
         });
-
         switch ($response) {
             case Password::RESET_LINK_SENT:
                 return redirect()->back()->with('status', trans($response));

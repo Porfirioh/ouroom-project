@@ -14,22 +14,15 @@ use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class NotificationController extends Controller{
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(){
+class NotificationController extends Controller
+{
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         if ($request->ajax()) {
             $data = Notification::orderBy('created_at', 'DESC')->get();
             return Datatables::of($data)
@@ -52,7 +45,8 @@ class NotificationController extends Controller{
         }
     }
 
-    public function getDetail(Request $request){
+    public function getDetail(Request $request)
+    {
         if ($request->ajax()) {
             $user_notification = UserNotification::where('user_id', Auth::user()->id)->where('notification_id', $request->get('idnotification'))->where('status', UserNotification::STATUS_UNREAD)->first();
             if ($user_notification != null) {
@@ -64,13 +58,8 @@ class NotificationController extends Controller{
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreNotificationRequest $request){
+    public function store(StoreNotificationRequest $request)
+    {
         DB::beginTransaction();
         $notification = new Notification();
         $notification->notification_type    = $request->get('notification_type');

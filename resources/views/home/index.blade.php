@@ -16,68 +16,60 @@
 		$user = Auth::user();
 	?>
 
-	<!-- User Type Guru -->
 	@if($user->account_type == User::ACCOUNT_TYPE_TEACHER)
-	<fieldset>
-	<legend>Overview</legend>
-		<div class="col-md-12">
-			<div class="card">
-				<div class="header">   
-					<p style="text-align: center; font-weight: bold;"> Total Kelas Anda</p>
-				</div>
-				<div class="content">
-					<h3 style="text-align: center;"> {{ $class }} </h3>
+		<fieldset>
+		<legend>Overview</legend>
+			<div class="col-md-12">
+				<div class="card">
+					<div class="header">   
+						<p style="text-align: center; font-weight: bold;"> Total Kelas Anda</p>
+					</div>
+					<div class="content">
+						<h3 style="text-align: center;"> {{ $class }} </h3>
+					</div>
 				</div>
 			</div>
-		</div>
-	</fieldset>
-	<br>
+		</fieldset>
+		<br>
 	@endif
 
-
-	<!-- User Type Creator / Admin -->
 	@if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_ADMIN)
-	<fieldset>
-	<legend>Overview</legend>
-		<div class="col-md-4">
-			<div class="card">
-				<div class="header">   
-					<p style="text-align: center; font-weight: bold;"> Total Kelas </p>
-				</div>
-				<div class="content">
-					<h3 style="text-align: center;"> {{ $class }} </h3>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-4">
-			<div class="card">
-				<div class="header">   
-					<p style="text-align: center; font-weight: bold;"> Total Siswa </p>
-				</div>
-				<div class="content">
-				<h3 style="text-align: center;"> {{ $siswa }} </h3>
+		<fieldset>
+		<legend>Overview</legend>
+			<div class="col-md-4">
+				<div class="card">
+					<div class="header">   
+						<p style="text-align: center; font-weight: bold;"> Total Kelas </p>
+					</div>
+					<div class="content">
+						<h3 style="text-align: center;"> {{ $class }} </h3>
+					</div>
 				</div>
 			</div>
-		</div>
-
-		<div class="col-md-4">
-			<div class="card">
-				<div class="header">   
-					<p style="text-align: center; font-weight: bold;"> Total Guru </p>
-				</div>
-				<div class="content">
-				<h3 style="text-align: center;"> {{ $teacher }} </h3>
+			<div class="col-md-4">
+				<div class="card">
+					<div class="header">   
+						<p style="text-align: center; font-weight: bold;"> Total Siswa </p>
+					</div>
+					<div class="content">
+					<h3 style="text-align: center;"> {{ $siswa }} </h3>
+					</div>
 				</div>
 			</div>
-		</div>
-	</fieldset>
-	<br>
+			<div class="col-md-4">
+				<div class="card">
+					<div class="header">   
+						<p style="text-align: center; font-weight: bold;"> Total Guru </p>
+					</div>
+					<div class="content">
+					<h3 style="text-align: center;"> {{ $teacher }} </h3>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		<br>
 	@endif
 
-	<!-- User Type Siswa -->
-	@if($user->account_type == User::ACCOUNT_TYPE_SISWA)
-	@endif
 	<fieldset>
 		<legend>Informasi User</legend>
 		<div class="form-group">

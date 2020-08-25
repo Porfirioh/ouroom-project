@@ -34,10 +34,6 @@
 
 @section('content')
 
-<!-- <div style="padding-bottom: 20px">
-  <a  href="{{ route('create-role') }}" type="button" class="btn btn-info"> TAMBAH </a>
-</div> -->
-
 <div class="table-responsive">
   <table class="table table-bordered data-table display nowrap" style="width:100%">
     <thead>

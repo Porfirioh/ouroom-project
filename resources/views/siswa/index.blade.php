@@ -37,7 +37,6 @@
 <div style="padding-bottom: 20px">
   <a  href="{{ route('create-siswa') }}" type="button" class="ui huge inverted primary button"> TAMBAH </a>
 </div>
-
 <div style="width: 100%; padding-left: -10px;">
   <div class="table-responsive">
     <table id="user_table_siswa" class="table table-bordered data-table display nowrap" style="width:100%">
@@ -73,17 +72,14 @@
           <label>Username</label>
           <input type="text" class="form-control" value="" id="username">
         </div>
-
         <div class="form-group">
           <label>Email</label>
           <input type="text" class="form-control" value="" id="email">
         </div>
-
         <div class="form-group">
           <label>Nama</label>
           <input type="text" class="form-control" value="" id="nama_lengkap">
         </div>
-
         <div class="form-group">
           <label for="sel1">Tipe Akun</label>
           <select class="form-control" id="tipe_akun" disabled>
@@ -110,12 +106,10 @@
           <label>Username</label>
           <input type="text" class="form-control" value="" id="username_password" disabled>
         </div>
-
         <div class="form-group">
           <label>Password</label>
           <input type="password" class="form-control" value="" id="password">
         </div>
-
         <div class="form-group">
           <label>Re Password</label>
           <input type="password" class="form-control" value="" id="password_confirmation">

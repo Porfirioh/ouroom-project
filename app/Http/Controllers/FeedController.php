@@ -82,13 +82,12 @@ class FeedController extends Controller
                         ->where('id', $id_kelas)
                         ->get();
                     return view('student_class.list', ['active' => 'student_class', 'id_kelas' => $id_kelas, 'nama_kelas' => $nama_kelas, 'data_kelas' => $data_kelas, 'data_feed' => $data_feed]);
-                } else if ($token == null){
+                } else if ($token == null) {
                     return view('error.unauthorized', ['active' => 'student_class']);
                 }
             } else {
                 return view('error.unauthorized', ['active' => 'student_class']);
             }
-            
         }
     }
 
@@ -243,7 +242,7 @@ class FeedController extends Controller
         $nama_feed = $request->nama_feed;
         $id_class = $request->id_kelas;
         $id_feed = $request->id_feed;
-        if($request->has('file')) {
+        if ($request->has('file')) {
             $tugas = new Tugas();
             $files = $request->file('file');
             $path = public_path($nama_kelas . '/' . $nama_feed . '/' . $nama_siswa);

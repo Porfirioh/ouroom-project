@@ -53,7 +53,6 @@
           <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('full_name') }}</p></div>
       @endif
     </div>
-
     <div class="form-group">
       <label>Email</label>
       <input type="text" value="{{ $data_user->email }}" class="form-control" value="" name="email">
@@ -80,7 +79,6 @@
     @endif
 
     <input type="hidden" value="{{ $data_user->id }}" class="form-control" value="" name="iduser">
-  
     <div class="form-group">
       <button type="submit" class="ui big primary button"> UPDATE </button>
       <button type="button" id="change_pass" class="ui big inverted red button right floated"> UBAH PASSWORD </button>

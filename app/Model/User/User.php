@@ -14,7 +14,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable {
+class User extends Authenticatable
+{
     use HasRoles;
     use Notifiable;
 
@@ -26,11 +27,6 @@ class User extends Authenticatable {
     const ACCOUNT_TYPE_TEACHER = "Guru";
     const ACCOUNT_TYPE_SISWA = "Siswa";
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'username', 'jenis_kelamin', 'email', 'full_name', 'jurusan', 'angkatan', 'account_type', 'password', 'status', 'profile_picture', 'last_login_at',
         'last_login_ip'
@@ -44,58 +40,41 @@ class User extends Authenticatable {
         'account_type' => 'required | string',
     ];
 
-    /**
-     * 
-     */
-    public static function getUser(){
+    public static function getUser()
+    {
         return self::whereNotIn('account_type', [User::ACCOUNT_TYPE_CREATOR, User::ACCOUNT_TYPE_SISWA])->get();
     }
 
-    /**
-     * 
-     */
-    public static function getTeacher($search = null){
+    public static function getTeacher($search = null)
+    {
         return self::where('account_type', User::ACCOUNT_TYPE_TEACHER)->where('full_name', 'like', '%' . $search . '%')->get();
     }
 
-    /**
-     * 
-     */
-    public static function getSiswa($search = null){
+    public static function getSiswa($search = null)
+    {
         return self::where('account_type', User::ACCOUNT_TYPE_SISWA)->where('full_name', 'like', '%' . $search . '%')->get();
     }
 
-    /**
-     * 
-     */
-    public static function passwordChangeValidation($old_password, $curent_password){
-        if (Hash::check($old_password, $curent_password)){
+    public static function passwordChangeValidation($old_password, $curent_password)
+    {
+        if (Hash::check($old_password, $curent_password)) {
             return true;
         }
         return false;
     }
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password'
     ];
 
-    /**
-     * @var array
-     */
-    public static function userByUsername($username){
+    public static function userByUsername($username)
+    {
         $data = static::where('username', $username)->first();
         return $data;
     }
 
-    /**
-     * 
-     */
-    public static function getAccountMeaning($acount){
+    public static function getAccountMeaning($acount)
+    {
         switch ($acount) {
             case static::ACCOUNT_TYPE_CREATOR:
                 return 'Creator';
@@ -110,13 +89,9 @@ class User extends Authenticatable {
         }
     }
 
-
-    /**
-     * @var Bol
-     */
-    public static function checkIfTeacher($id){
+    public static function checkIfTeacher($id)
+    {
         $data = static::where(['account_type' => static::ACCOUNT_TYPE_TEACHER, 'id' => $id])->first();
-
         if ($data != null) {
             return true;
         } else {
@@ -124,9 +99,9 @@ class User extends Authenticatable {
         }
     }
 
-    public static function checkIfSiswa($id){
+    public static function checkIfSiswa($id)
+    {
         $data = static::where(['account_type' => static::ACCOUNT_TYPE_SISWA, 'id' => $id])->first();
-
         if ($data != null) {
             return true;
         } else {
@@ -134,29 +109,23 @@ class User extends Authenticatable {
         }
     }
 
-    public function hasClass(){
+    public function hasClass()
+    {
         return $this->belongsToMany(StudentClass::class, 'tbl_class_user', 'user_id', 'class_id');
     }
 
-    public function hasTugas(){
+    public function hasTugas()
+    {
         return $this->hasMany(Tugas::class);
     }
 
-    /**
-     * Sudah ada hash function maka tidak perlu dihash
-     * @param $value
-     */
-    public function setPasswordAttribute($value){
+    public function setPasswordAttribute($value)
+    {
         $this->attributes['password'] = Hash::make($value);
     }
 
-    /**
-     * Send the password reset notification.
-     *
-     * @param  string  $token
-     * @return void
-     */
-    public function sendPasswordResetNotification($token){
+    public function sendPasswordResetNotification($token)
+    {
         $this->notify(new ResetPasswordNotification($token));
     }
 }

@@ -10,39 +10,35 @@ use App\Model\ActionLog\ActionLog;
 use Auth;
 use DB;
 
-class Controller extends BaseController{
+class Controller extends BaseController
+{
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    public function getUserLogin(){
+    public function getUserLogin()
+    {
         $user = Auth::user();
         return $user;
     }
 
-    /**
-     * @return void
-     */
-    public function getResponse($status,$status_code,$data=null,$message){
-        if($status != false){
-            return response()->json(['status'=> $status, 'status_code'=> $status_code, 'data'=>$data, 'message'=>$message]); 
+    public function getResponse($status, $status_code, $data = null, $message)
+    {
+        if ($status != false) {
+            return response()->json(['status' => $status, 'status_code' => $status_code, 'data' => $data, 'message' => $message]);
         } else {
-            return response()->json(['status'=> $status, 'status_code'=> $status_code, 'data'=>$data, 'message'=>$message]);  
+            return response()->json(['status' => $status, 'status_code' => $status_code, 'data' => $data, 'message' => $message]);
         }
     }
 
-    /**
-     * Untuk mengontrol permission 
-     */
-    public function getUserPermission($permission_name){
+    public function getUserPermission($permission_name)
+    {
         $user = Auth::user();
-        if(!$user->hasPermissionTo($permission_name)){
+        if (!$user->hasPermissionTo($permission_name)) {
             return false;
         }
         return true;
     }
 
-    /**
-     * @return void
-     */
-    public function systemLog($is_error = false, $action_message=''){
+    public function systemLog($is_error = false, $action_message = '')
+    {
         $user = Auth::user();
         DB::beginTransaction();
         $action_log = new ActionLog();
@@ -51,7 +47,7 @@ class Controller extends BaseController{
         $action_log->action_message = $action_message;
         $action_log->user_id = $user->id;
         $action_log->date = date('Y-m-d H:i:s');
-        if(!$action_log->save()){
+        if (!$action_log->save()) {
             DB::rollBack();
             return false;
         }
@@ -59,12 +55,7 @@ class Controller extends BaseController{
         return true;
     }
 
-    
-    /**
-     * @return void
-     */
-    public function printLog(){
-
+    public function printLog()
+    {
     }
-
 }

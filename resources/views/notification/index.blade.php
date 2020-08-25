@@ -42,7 +42,6 @@
 				<option value="{{ Notification::NOTIFICATION_TYPE_SISWA }}" > Untuk Siswa</option>
 			</select>
 		</div>
-
 		<div class="form-group">
 			<label>Judul Notifikasi</label>
 			<input type="text" class="form-control" value="" name="notification_title">
@@ -50,7 +49,6 @@
 			    <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('notification_title') }}</p></div>
 			@endif
 		</div>
-
 		<div class="form-group">
 			<label>Pesan Notifikasi</label>
 			<textarea class="form-control" placeholder="" rows="3" id="notification_message" name="notification_message"></textarea>
@@ -59,11 +57,8 @@
 		<div class="form-group">
 			<button type="submit" class="ui huge inverted primary button"> KIRIM </button>
 		</div>
-
 	</form>
-
 	<hr> 
-
 	<div class="table-responsive">
 		<table class="table table-bordered data-table display nowrap" style="width:100%">
 		<thead>
@@ -78,7 +73,7 @@
 		</tbody>
 		</table>
 	</div>
-	
+
 @endsection
 
 @push('scripts')

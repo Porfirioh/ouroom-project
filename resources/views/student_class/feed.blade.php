@@ -51,9 +51,7 @@
             <div class="upload">
                 <label>Judul</label>
                 <input type="text" class="form-control" id="judul" name="judul" value="{{$f->judul}}">
-
                 <input type="hidden" name="id_kelas" value="{{ $id_kelas }}">
-
                 <label>Kategori</label>
                 <select class="form-control" name="kategori">
                     <option selected="true" disabled="disabled" value="{{$f->kategori}}">{{$f->kategori}}</option> 
@@ -68,7 +66,6 @@
             <div class="upload">
                 <label>Upload File</label>
                 <input type="file" class="form-control" id="file" name="file">
-
                 <label>Tenggat Waktu</label>
                 <input type="date" min="2020-01-01" class="form-control" id="deadline" name="deadline">
             </div>
@@ -131,7 +128,6 @@
                     <div class="ui segments sfile">
                         <input type="file" id="file" name="file">
                     </div>
-
                     <div class="ui bottom attached huge buttons">
                         <button type="submit" class="ui button markbtn" id="tugas" value="Belum Selesai">Tandai Selesai</button>
                     </div>

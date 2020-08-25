@@ -15,32 +15,35 @@ use Auth;
 use DB;
 use Illuminate\Support\Facades\Log;
 
-class StudentClassController extends Controller {
-    public function __construct() {
+class StudentClassController extends Controller
+{
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $data_guru = User::getTeacher();
         $data_user = Auth::user()->full_name;
         $user_id = Auth::id();
         $guru_option = '<select class="js-example-basic-single form-control" name="teacher_id" id="guru" style="width: 100%">';
         foreach ($data_guru as $guru) {
-            $guru_option .= '<option value="'.$guru->id.'">'.$guru->full_name.'</option>';
+            $guru_option .= '<option value="' . $guru->id . '">' . $guru->full_name . '</option>';
         }
         $guru_option .= '</select>';
         $years = array_combine(range(date("Y"), 2018), range(date("Y"), 2018));
-        if($this->getUserLogin()->account_type == User::ACCOUNT_TYPE_CREATOR || $this->getUserLogin()->account_type == User::ACCOUNT_TYPE_ADMIN){
+        if ($this->getUserLogin()->account_type == User::ACCOUNT_TYPE_CREATOR || $this->getUserLogin()->account_type == User::ACCOUNT_TYPE_ADMIN) {
             if ($request->ajax()) {
                 $data = StudentClass::all();
                 return Datatables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('action', function($row){  
-                        $btn = '<button onclick="btnUbah('.$row->id.')" name="btnUbah" type="button" class="ui big inverted primary button" style="text-align: center"><span class="glyphicon glyphicon-edit"></span></button>';
-                        return $btn; 
+                    ->addColumn('action', function ($row) {
+                        $btn = '<button onclick="btnUbah(' . $row->id . ')" name="btnUbah" type="button" class="ui big inverted primary button" style="text-align: center"><span class="glyphicon glyphicon-edit"></span></button>';
+                        return $btn;
                     })
-                    ->addColumn('guru', function(StudentClass $class) {
-                        if($class->getTeacher->account_type != User::ACCOUNT_TYPE_TEACHER){
+                    ->addColumn('guru', function (StudentClass $class) {
+                        if ($class->getTeacher->account_type != User::ACCOUNT_TYPE_TEACHER) {
                             return 'Guru sudah tidak aktif';
                         } else {
                             return $class->getTeacher->full_name;
@@ -55,25 +58,25 @@ class StudentClassController extends Controller {
                     ->get();
                 return Datatables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('action', function($row){  
-                        $btn = '<button onclick="btnUbah('.$row->id.')" name="btnUbah" type="button" class="ui big inverted primary button" style="text-align: center"><span class="glyphicon glyphicon-edit"></span></button>';
-                        return $btn; 
+                    ->addColumn('action', function ($row) {
+                        $btn = '<button onclick="btnUbah(' . $row->id . ')" name="btnUbah" type="button" class="ui big inverted primary button" style="text-align: center"><span class="glyphicon glyphicon-edit"></span></button>';
+                        return $btn;
                     })
-                    ->addColumn('guru', function(StudentClass $class) {
+                    ->addColumn('guru', function (StudentClass $class) {
                         return $class->getTeacher->full_name;
-                    }) 
+                    })
                     ->rawColumns(['action'])
                     ->toJson();
             }
         }
 
-        if($this->getUserPermission('index class')){
-            if($this->getUserLogin()->account_type == User::ACCOUNT_TYPE_CREATOR || $this->getUserLogin()->account_type == User::ACCOUNT_TYPE_ADMIN){
+        if ($this->getUserPermission('index class')) {
+            if ($this->getUserLogin()->account_type == User::ACCOUNT_TYPE_CREATOR || $this->getUserLogin()->account_type == User::ACCOUNT_TYPE_ADMIN) {
                 $data_kelas = DB::table('tbl_class')
                     ->join('tbl_user', 'tbl_class.teacher_id', '=', 'tbl_user.id')
                     ->select('tbl_class.*', 'tbl_user.full_name')
                     ->get();
-            } else if($this->getUserLogin()->account_type == User::ACCOUNT_TYPE_TEACHER){
+            } else if ($this->getUserLogin()->account_type == User::ACCOUNT_TYPE_TEACHER) {
                 $data_kelas = DB::table('tbl_class')
                     ->join('tbl_user', 'tbl_class.teacher_id', '=', 'tbl_user.id')
                     ->where('teacher_id', $user_id)
@@ -84,13 +87,14 @@ class StudentClassController extends Controller {
                     ->with('hasClass')
                     ->get();
             }
-            return view('student_class.index', ['active'=>'student_class', 'years'=>$years, 'guru_option'=>$guru_option, 'data_kelas'=>$data_kelas, 'data_guru'=>$data_guru, 'data_user'=>$data_user]);
+            return view('student_class.index', ['active' => 'student_class', 'years' => $years, 'guru_option' => $guru_option, 'data_kelas' => $data_kelas, 'data_guru' => $data_guru, 'data_user' => $data_user]);
         } else {
-            return view('error.unauthorized', ['active'=>'student_class']);
+            return view('error.unauthorized', ['active' => 'student_class']);
         }
     }
 
-    public function joinClass(Request $request) {
+    public function joinClass(Request $request)
+    {
         $this->validate($request, [
             'token' => 'required'
         ]);
@@ -108,7 +112,7 @@ class StudentClassController extends Controller {
         $id_kelas = DB::table('tbl_class')
             ->where('token', $token_kelas)
             ->value('id');
-        if($user_data == $class_data){
+        if ($user_data == $class_data) {
             $user->hasClass()->syncWithoutDetaching($id_kelas);
             return redirect()->back()->with('alert_success', 'Berhasil Join Kelas');
         } else {
@@ -116,17 +120,19 @@ class StudentClassController extends Controller {
         }
     }
 
-    public function create(){
+    public function create()
+    {
         $user_id = Auth::id();
-        if($this->getUserPermission('create class')){
+        if ($this->getUserPermission('create class')) {
             $years = array_combine(range(date("Y"), 2018), range(date("Y"), 2018));
-            return view('student_class.store', ['active'=>'student_class','years'=>$years, 'user_id'=>$user_id]);
+            return view('student_class.store', ['active' => 'student_class', 'years' => $years, 'user_id' => $user_id]);
         } else {
-            return view('error.unauthorized', ['active'=>'student_class']);
+            return view('error.unauthorized', ['active' => 'student_class']);
         }
     }
 
-    public function update(UpdateStudentClassRequest $request){
+    public function update(UpdateStudentClassRequest $request)
+    {
         if ($request->ajax()) {
             DB::beginTransaction();
             $student_class = StudentClass::findOrFail($request->get('idclass'));
@@ -135,21 +141,23 @@ class StudentClassController extends Controller {
             $student_class->jurusan = $request->get('jurusan');
             $student_class->note = $request->get('note');
             $student_class->teacher_id = $request->get('teacher_id');
-            if(!$student_class->save()){
+            if (!$student_class->save()) {
                 DB::rollBack();
-                return $this->getResponse(false,400,'','Kelas gagal diupdate');
-            } if ($this->getUserPermission('update class')) {
+                return $this->getResponse(false, 400, '', 'Kelas gagal diupdate');
+            }
+            if ($this->getUserPermission('update class')) {
                 DB::commit();
-                return $this->getResponse(true,200,'','Kelas berhasil diupdate');
+                return $this->getResponse(true, 200, '', 'Kelas berhasil diupdate');
             } else {
                 DB::rollBack();
-                return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+                return $this->getResponse(false, 505, '', 'Tidak mempunyai izin untuk aktifitas ini');
             }
         }
     }
 
-    public function store(StoreStudentClassRequest $request) {
-        if($this->getUserLogin()->account_type == User::ACCOUNT_TYPE_CREATOR || $this->getUserLogin()->account_type == User::ACCOUNT_TYPE_ADMIN){
+    public function store(StoreStudentClassRequest $request)
+    {
+        if ($this->getUserLogin()->account_type == User::ACCOUNT_TYPE_CREATOR || $this->getUserLogin()->account_type == User::ACCOUNT_TYPE_ADMIN) {
             DB::beginTransaction();
             $student_class = new StudentClass();
             $student_class->class_name = $request->get('class_name');
@@ -158,7 +166,7 @@ class StudentClassController extends Controller {
             $student_class->note = $request->get('note');
             $student_class->teacher_id = $request->get('teacher_id');
             $student_class->token = str_random(8);
-        } else if($this->getUserLogin()->account_type == User::ACCOUNT_TYPE_TEACHER){
+        } else if ($this->getUserLogin()->account_type == User::ACCOUNT_TYPE_TEACHER) {
             DB::beginTransaction();
             $student_class = new StudentClass();
             $student_class->class_name = $request->get('class_name');
@@ -168,29 +176,29 @@ class StudentClassController extends Controller {
             $student_class->teacher_id = Auth::id();
             $student_class->token = str_random(8);
         }
-        if(!$student_class->save()) {
+        if (!$student_class->save()) {
             DB::rollBack();
             return redirect('student-class')->with('alert_error', 'Gagal Disimpan');
         }
-        if($this->getUserPermission('create class')) {
+        if ($this->getUserPermission('create class')) {
             DB::commit();
             return redirect('student-class')->with('alert_success', 'Berhasil Disimpan');
-        }
-        else {
+        } else {
             DB::rollBack();
-            return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+            return $this->getResponse(false, 505, '', 'Tidak mempunyai izin untuk aktifitas ini');
         }
     }
 
-    public function getUserTeacher(Request $request) {
+    public function getUserTeacher(Request $request)
+    {
         if ($request->ajax()) {
-            if($request->has('search')){
+            if ($request->has('search')) {
                 $data_guru = User::getTeacher($request->get('search'));
             } else {
                 $data_guru = User::getTeacher();
             }
             $arr_data  = array();
-            if($data_guru) {
+            if ($data_guru) {
                 $key = 0;
                 foreach ($data_guru as $data) {
                     $arr_data[$key]['id'] = $data->id;
@@ -202,17 +210,19 @@ class StudentClassController extends Controller {
         }
     }
 
-    public function show(Request $request) {
+    public function show(Request $request)
+    {
         if ($request->ajax()) {
             $student_class = StudentClass::findOrFail($request->get('idclass'));
             return new StudentClassResource($student_class);
         }
     }
 
-    public function delete(Request $request) {
+    public function delete(Request $request)
+    {
         if ($request->ajax()) {
             StudentClass::findOrFail($request->idclass)->delete();
-            return $this->getResponse(true,200,'','Kelas berhasil dihapus');
+            return $this->getResponse(true, 200, '', 'Kelas berhasil dihapus');
         }
         return redirect()->back()->with('alert_success', 'Berhasil Join Kelas');
     }

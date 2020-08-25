@@ -14,11 +14,6 @@ class Notification extends Model
     protected $table = 'tbl_notification';
     protected $guard_name = 'web';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'notification_type',
         'notification_title',
@@ -26,26 +21,16 @@ class Notification extends Model
         'date'
     ];
 
-    /**
-     *
-     */
     public static $rules = [
         'notification_type' => 'required | interger',
         'notification_title' => 'required | string',
         'date' => 'required | date',
     ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
     protected $hidden = [];
 
-    /**
-     * 
-     */
-    public static function getTypeMeaning($notification_type){
+    public static function getTypeMeaning($notification_type)
+    {
         switch ($notification_type) {
             case static::NOTIFICATION_TYPE_TEACHER:
                 return 'Untuk Guru';
