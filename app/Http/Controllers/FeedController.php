@@ -92,6 +92,16 @@ class FeedController extends Controller
         }
     }
 
+    public function keluarClass(Request $request)
+    {
+        $id_user = Auth::id();
+        $id_kelas = $request->id;
+        $user = User::findOrFail($id_user);
+        $user->hasClass()->detach($id_kelas);
+        $this->systemLog(false, 'Berhasil keluar kelas');
+        return redirect()->back()->with('alert_success', 'Berhasil keluar kelas.');
+    }
+
     public function showFeed(Request $request)
     {
         $id_kelas = $request->id_kelas;

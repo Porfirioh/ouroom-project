@@ -63,6 +63,7 @@ $router->group(['prefix' => 'student-class'], function () use ($router) {
 
 	// Class Feed
 	$router->get('/{id_kelas}', ['as'=>'list-student-class','uses' => 'FeedController@showClass']);
+	$router->post('/{id_kelas}', ['as'=>'keluar-class','uses' => 'FeedController@keluarClass']);
 	$router->post('/{id_kelas}/upload',  ['as'=>'upload-feed','uses' => 'FeedController@uploadFeed']);
 	$router->post('/{id_kelas}/upload-tugas',  ['as'=>'upload-tugas','uses' => 'FeedController@uploadTugas']);
 	$router->post('/{id_kelas}/delete-feed',  ['as'=>'delete-feed','uses' => 'FeedController@deleteFeed']);
