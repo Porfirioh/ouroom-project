@@ -39,7 +39,7 @@
 		// get user auth
 		$user = Auth::user();
     ?>
-
+    
     <form method="post" action="{{ route('update-tugas', ['id_kelas'=>$id_kelas, 'id_feed'=>$id_feed, 'siswa_id'=>$siswa_id]) }}">
 
         @csrf
