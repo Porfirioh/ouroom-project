@@ -268,7 +268,7 @@ class FeedController extends Controller
             'nilai' => 'integer',
         ]);
 
-        $siswa_id = $request->get('siswa_id');
+        $siswa_id = $request->siswa_id;
         $tugas_id = DB::table('tbl_tugas')
             ->where('siswa_id', $siswa_id)
             ->value('id');
