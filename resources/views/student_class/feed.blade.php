@@ -108,7 +108,7 @@
                     @endif
                     <div class="ui red large label deadline">{{ date('d-m-Y',strtotime($f->deadline)) }}</div>
                     <a class="ui top right attached huge label">
-                        <span class="date-post">{{ date('d-m-Y h:i:s',strtotime($f->created_at)) }}</span>
+                        <span class="date-post">{{ date('d-m-Y',strtotime($f->created_at)) }}</span>
                     </a>
                 </div>
                 <pre class="detail-section2">{{ $f->detail }}</pre>
@@ -116,12 +116,13 @@
                     <div class="ui blue segment">
                         <h5>
                             <a href="{{ url($nama_kelas.'/'.$f->judul.'/'.$f->file) }}" target="_blank">
-                                <img height"80" width="80" src="{{ asset('asset/file_thumb.png') }}"> {{ $f->file }} </img>
+                                <img height"80" width="80" src="{{ asset('asset/file_thumb.png') }}"> 
+                                    <span class="file-name"> {{ $f->file }} </span>
+                                </img>
                             </a>
                         </h5>
                     </div>
                 @endif
-                <div class="attached-files"><a href="{{ url('public/data_file'.'/'.$f->file) }}"></a></div>
                 @if($user->account_type == User::ACCOUNT_TYPE_SISWA && $tugas == null)
                     <hr style="border-top: 1px solid #c6c6c6">
                     <label>Upload File</label>

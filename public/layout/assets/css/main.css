@@ -11,6 +11,7 @@ import 'file-upload-with-preview/dist/file-upload-with-preview.min.css';
 
 #customCards{
     margin-bottom: 15px !important;
+    margin-top: 15px !important;
 }
 
 #customJoinClass{
@@ -139,4 +140,24 @@ input[type="date"] {
 #token:focus{
     background: #2185d0;
     color: white;
+}
+.padding-r-0{
+    padding-right: 0 !important;
+}
+@media only screen and (max-width: 560px){
+    .main-panel > .content {
+        padding: 30px 0 !important;
+    }
+    .container-fluid{
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+    .file-name{
+        margin-top: 10px;
+        white-space: nowrap;
+        width: 260px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
 }

@@ -92,6 +92,8 @@
     <!-- Notifications Plugin    -->
     <script src="<?= URL::to('/'); ?>/layout/assets/js/bootstrap-notify.js"></script>
 
+    <script src="<?= URL::to('/'); ?>/layout/assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
+
 	<script type="text/javascript">
     	
         var base_url = {!! json_encode(url('/')) !!}
