@@ -1,12 +1,13 @@
 import 'file-upload-with-preview/dist/file-upload-with-preview.min.css';
 
+
 .custombtn:hover{
     background: #286cd2 !important;
     color: white !important;
 }
 
 #customSegments {
-    margin: 0 18px 10px 18px !important;
+    margin: 0 5px 10px 18px !important;
 }
 
 #customCards{
@@ -113,7 +114,7 @@ input[type="date"] {
 .detail-section2{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 15px;
-    margin: 10px 0;
+    margin: 0;
     border: none;
     background: none;
 }
@@ -133,10 +134,6 @@ input[type="date"] {
     content:"Copy Token";
     letter-spacing: 1px;
 }
-#token:hover:before{
-    content:"Copy Token";
-    letter-spacing: 1px;
-}
 #token:focus{
     background: #2185d0;
     color: white;
@@ -149,7 +146,6 @@ input[type="date"] {
         padding: 30px 0 !important;
     }
     .container-fluid{
-        padding-right: 0 !important;
         padding-left: 0 !important;
     }
     .file-name{

@@ -103,14 +103,15 @@
                     @if($f->kategori == 'Ujian')
                         <div class="ui red ribbon huge label">{{$f->kategori}}</div>
                     @endif
-                    @if($user->account_type == User::ACCOUNT_TYPE_SISWA)
-                        <span class="judul" style="font-weight:bold">NILAI : {{ $nilai }}</span>
-                    @endif
                     <div class="ui red large label deadline">{{ date('d-m-Y',strtotime($f->deadline)) }}</div>
                     <a class="ui top right attached huge label">
                         <span class="date-post">{{ date('d-m-Y',strtotime($f->created_at)) }}</span>
                     </a>
                 </div>
+                @if($user->account_type == User::ACCOUNT_TYPE_SISWA)
+                    <br>
+                    <span class="judul" style="font-weight:bold">{{ $nilai }}/100</span>
+                @endif
                 <pre class="detail-section2">{{ $f->detail }}</pre>
                 @if($f->file != null)
                     <div class="ui blue segment">

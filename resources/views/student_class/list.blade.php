@@ -119,9 +119,8 @@
 					<a class="ui red ribbon huge label">{{$df->kategori}}</a>
 				@endif
 				<span class="judul">{{$df->judul}}</span>
-				<div class="ui red large label deadline">{{ date('d-m-Y',strtotime($df->deadline)) }}</div>
 				<a class="ui top right attached huge image label">
-					<span class="date-post">{{ date('d-m-Y h:i:s',strtotime($df->created_at)) }}</span>
+					<span class="date-post">{{ date('d-m-Y',strtotime($df->created_at)) }}</span>
 				</a>
 			</div>
 			<pre class="detail-section">{{$df->detail}}</pre>
